@@ -1,3 +1,4 @@
+@:headerInclude("CivetC.h")
 function main() {
     trace("123");
     CivetC.get("/hello",(con,id)->{
@@ -7,8 +8,8 @@ function main() {
         CivetC.send(id, "world");
     });
     CivetC.get("/testgc",(con,id)->{
-        var d=Date.now();
-        var as_str=d.toString();
+        //var d=Date.now();
+        var as_str="123";//d.toString();
         CivetC.send(id, 'NOW IS $as_str');
     });
     CivetC.main(8086);

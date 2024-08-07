@@ -30,18 +30,29 @@ extern "C"
     void pass_to_haxe(Receiver<req_info> &&reciever)
     {
         int inTop = 0;
+        #ifdef cpp
         hx::SetTopOfStack((int *)&inTop, true);
+        #endif
 
         req_info next;
         while (true)
         {
             try {
                 cout << "reading next from channel" << endl;
+                #ifdef cpp
                 hx::EnterGCFreeZone();
+                #endif
                 reciever.recv(next);
+                #ifdef cpp
                 hx::TryExitGCFreeZone();
+                #endif
                 cout << "done reading next from channel" << endl;
+                #ifdef cpp
             CivetC_obj::respond(next.conn, next.uuid);
+            #endif
+                #ifdef cxx
+            CivetC::respond(next.conn, next.uuid);
+            #endif
             } catch(exception ex){
                 cerr << "error in rx loop" << ex.what() << endl;
             }
@@ -129,7 +140,7 @@ extern "C"
         cout << "will listen on port " << port << endl;
 
         const char *options[] = {
-            "listening_ports", port,
+            "listening_ports", "8086",
             //"num_threads", "5",
             //"prespawn_threads", "5",
             NULL};

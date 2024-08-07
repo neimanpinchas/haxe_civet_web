@@ -1,6 +1,9 @@
 --main Main
---cpp bin
+#--cpp bin
 -D HXCPP_M64
 #-D linux
 -D windows
 #-D static_link
+-lib reflaxe.cpp
+-D cpp-output=out
+-D check-xml-proxy
