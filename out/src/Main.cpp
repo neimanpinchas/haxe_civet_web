@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include "civetweb.h"
+#include <CivetC.h>
 
 using namespace std::string_literals;
 

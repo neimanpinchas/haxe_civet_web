@@ -38,7 +38,9 @@ void CivetC::main(int port) {
 
 		haxe::Log::trace(k, haxe::shared_anon<haxe::PosInfos>("CivetC"s, "CivetC.hx"s, 65, "main"s, std::make_shared<std::deque<haxe::DynamicToString>>(std::deque<haxe::DynamicToString>{ v })));
 	};
-
+	cout << "as number" << port << endl;
+	cout << "as string" << Std::string(port) << endl;
+	cout << "as c_str" << _CxxConvert::StdString_Impl_::_new(Std::string(port)) << endl;
 	_StartWeb(_CxxConvert::StdString_Impl_::_new(Std::string(port)));
 }
 
@@ -67,10 +69,10 @@ void CivetC::makelog(haxe::DynamicToString what) {
 }
 
 std::string CivetC::respond(const Star<mg_connection>* conn, uint32_t id) {
-	Star<mg_request_info>* req_info = mg_get_request_info(conn);
-	std::string tempString = std::string(req_info);
+	Star<mg_request_info>* req_info = const_cast<mg_request_info*>(mg_get_request_info(conn));
+	//std::string tempString = std::string(req_info);
 
-	CivetC::makelog("Handling: "s + (tempString));
+	//CivetC::makelog("Handling: "s + (tempString));
 
 	int _g = 0;
 	std::shared_ptr<std::deque<std::shared_ptr<PathHandler>>> _g1 = CivetC::handlers;
